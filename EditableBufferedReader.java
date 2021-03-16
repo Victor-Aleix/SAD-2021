@@ -68,14 +68,36 @@ public class EditableBufferedReader extends BufferedReader {
 		Line l = new Line();
 		StringBuilder s = new StringBuilder();
 		int c = this.read();
-		while (c != '\n') {
-			l.text.add(l.cursor, (char) c);
-			l.cursor++;
+		while (c != '\r') {
+			switch (c) {
+			case LEFT:
+				l.left();
+				break;
+			case RIGHT:
+				l.right();
+				break;
+			case HOME:
+				l.home();
+				break;
+			case END:
+				l.end();
+				break;
+			case BACKSPACE:
+				l.delete();
+				break;
+			default:
+				l.text.add(l.cursor, (char) c);
+				l.cursor++;
+				break;
+			}
 			c = this.read();
+
 		}
+
 		for (Character car : l.text) {
 			s.append(car);
 		}
+		unsetRaw();
 		return s.toString();
 
 	}
