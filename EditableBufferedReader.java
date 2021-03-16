@@ -67,10 +67,11 @@ public class EditableBufferedReader extends BufferedReader {
 	public String readLine() {
 		Line l = new Line();
 		StringBuilder s = new StringBuilder();
-		int c;
-		while ((c = this.read()) != '\n') {
+		int c = this.read();
+		while (c != '\n') {
 			l.text.add(l.cursor, (char) c);
 			l.cursor++;
+			c = this.read();
 		}
 		for (Character car : l.text) {
 			s.append(car);

@@ -8,8 +8,8 @@ public class Line {
 
     public Line() {
 
-        cursor = 0;
-        ArrayList<Character> text = new ArrayList<Character>();
+        this.cursor = 0;
+        this.text = new ArrayList<Character>();
 
     }
 
