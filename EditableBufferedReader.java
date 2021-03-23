@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.Scanner;
 
+import javax.lang.model.util.ElementScanner6;
+
 public class EditableBufferedReader extends BufferedReader {
 
 	public static final int RIGHT = 12340;
@@ -64,9 +66,10 @@ public class EditableBufferedReader extends BufferedReader {
 		}
 	}
 
-	public String readLine() {
+	public String readLine() throws IOException {
 		Line l = new Line();
 		StringBuilder s = new StringBuilder();
+		OutputStream os = new BufferedOutputStream(System.out);
 		int c = this.read();
 		while (c != '\r') {
 			switch (c) {
@@ -85,20 +88,34 @@ public class EditableBufferedReader extends BufferedReader {
 			case BACKSPACE:
 				l.delete();
 				break;
+			case INSERT:
+				if (l.isInsert())
+					l.setInsert(false);
+				else
+					l.setInsert(true);
+				break;
 			default:
-				l.text.add(l.cursor, (char) c);
-				l.cursor++;
+				if (l.isInsert()) {
+					l.text.add(l.cursor, (char) c);
+					l.cursor++;
+				} else {
+					if (l.cursor == l.text.size()) {
+						l.text.add(l.cursor, (char) c);
+						l.cursor++;
+					} else {
+						l.text.set(l.cursor, (char) c);
+						l.cursor++;
+					}
+				}
 				break;
 			}
+
+			os.write(l.toString().getBytes());
 			c = this.read();
-
 		}
-
-		for (Character car : l.text) {
-			s.append(car);
-		}
+		
 		unsetRaw();
-		return s.toString();
+		return l.toString();
 
 	}
 }

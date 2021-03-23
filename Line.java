@@ -5,6 +5,7 @@ public class Line {
 
     int cursor;
     ArrayList<Character> text;
+    boolean insertMode = true;
 
     public Line() {
         this.cursor = 0;
@@ -42,5 +43,20 @@ public class Line {
         if (cursor < text.size()) {
             text.remove(cursor);
         }
+    }
+
+    public boolean isInsert(){
+        return insertMode;
+    }
+
+    public void setInsert(boolean b){
+        insertMode = b;
+    }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (Character c : text)
+            s.append(c);
+        return s.toString();
     }
 }
