@@ -75,18 +75,23 @@ public class EditableBufferedReader extends BufferedReader {
 			switch (c) {
 			case LEFT:
 				l.left();
+				System.out.print("\033[D");
 				break;
 			case RIGHT:
 				l.right();
+				System.out.print("\033[C");
 				break;
 			case HOME:
 				l.home();
+				System.out.print("\033["+l.cursor +"D");
 				break;
 			case END:
 				l.end();
+				System.out.print("\033["+(l.text.size()-l.cursor)+"C");
 				break;
 			case BACKSPACE:
 				l.delete();
+				System.out.print("\033[P");
 				break;
 			case INSERT:
 				if (l.isInsert())
@@ -98,13 +103,17 @@ public class EditableBufferedReader extends BufferedReader {
 				if (l.isInsert()) {
 					l.text.add(l.cursor, (char) c);
 					l.cursor++;
+					System.out.print((char) c);
 				} else {
 					if (l.cursor == l.text.size()) {
 						l.text.add(l.cursor, (char) c);
 						l.cursor++;
+						System.out.print((char) c);
 					} else {
 						l.text.set(l.cursor, (char) c);
 						l.cursor++;
+						System.out.print("\033[@");
+						System.out.print((char) c);
 					}
 				}
 				break;
