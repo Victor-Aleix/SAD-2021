@@ -69,7 +69,6 @@ public class EditableBufferedReader extends BufferedReader {
 	public String readLine() throws IOException {
 		Line l = new Line();
 		StringBuilder s = new StringBuilder();
-		OutputStream os = new BufferedOutputStream(System.out);
 		int c = this.read();
 		while (c != '\r') {
 			switch (c) {
@@ -118,8 +117,6 @@ public class EditableBufferedReader extends BufferedReader {
 				}
 				break;
 			}
-
-			os.write(l.toString().getBytes());
 			c = this.read();
 		}
 		
