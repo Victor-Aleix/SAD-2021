@@ -11,6 +11,7 @@ public class EditableBufferedReader extends BufferedReader {
 	public static final int END = 12343;
 	public static final int INSERT = 12344;
 	public static final int BACKSPACE = 12345;
+	public static final int SUP = 12346;
 
 	public EditableBufferedReader(InputStreamReader in) {
 		super(in);
@@ -56,6 +57,10 @@ public class EditableBufferedReader extends BufferedReader {
 					super.read();
 					c = INSERT;
 					break;
+				case '3':
+					super.read();
+					c = SUP;
+					break;
 				}
 			} else if (c == 127)
 				c = BACKSPACE;
@@ -68,7 +73,6 @@ public class EditableBufferedReader extends BufferedReader {
 
 	public String readLine() throws IOException {
 		Line l = new Line();
-		StringBuilder s = new StringBuilder();
 		int c = this.read();
 		while (c != '\r') {
 			switch (c) {
@@ -78,20 +82,25 @@ public class EditableBufferedReader extends BufferedReader {
 				break;
 			case RIGHT:
 				l.right();
-				System.out.print("\033[C");
+				if (l.cursor < l.text.size())
+					System.out.print("\033[C");
 				break;
 			case HOME:
+				System.out.print("\033[" + l.cursor + "D");
 				l.home();
-				System.out.print("\033["+l.cursor +"D");
 				break;
 			case END:
+				System.out.print("\033[" + (l.text.size() - l.cursor) + "C");
 				l.end();
-				System.out.print("\033["+(l.text.size()-l.cursor)+"C");
 				break;
 			case BACKSPACE:
 				l.delete();
-				System.out.print("\010\040\010");
+				System.out.print("\033[D");
+				System.out.print("\033[P");
 				break;
+			case SUP:
+				l.supr();
+				System.out.print("\033[P");
 			case INSERT:
 				if (l.isInsert())
 					l.setInsert(false);
@@ -102,6 +111,7 @@ public class EditableBufferedReader extends BufferedReader {
 				if (l.isInsert()) {
 					l.text.add(l.cursor, (char) c);
 					l.cursor++;
+					System.out.print("\033[@");
 					System.out.print((char) c);
 				} else {
 					if (l.cursor == l.text.size()) {
@@ -111,7 +121,6 @@ public class EditableBufferedReader extends BufferedReader {
 					} else {
 						l.text.set(l.cursor, (char) c);
 						l.cursor++;
-						System.out.print("\033[@");
 						System.out.print((char) c);
 					}
 				}
@@ -119,7 +128,7 @@ public class EditableBufferedReader extends BufferedReader {
 			}
 			c = this.read();
 		}
-		
+
 		unsetRaw();
 		return l.toString();
 
