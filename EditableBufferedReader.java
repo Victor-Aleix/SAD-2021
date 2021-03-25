@@ -91,7 +91,7 @@ public class EditableBufferedReader extends BufferedReader {
 				break;
 			case BACKSPACE:
 				l.delete();
-				System.out.print("\033[P");
+				System.out.print("\010\040\010");
 				break;
 			case INSERT:
 				if (l.isInsert())
