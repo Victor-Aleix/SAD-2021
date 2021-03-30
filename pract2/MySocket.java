@@ -15,13 +15,13 @@ publi class MySocket extends Socket{
     }
 
     @Override
-    public InputStream getInputStream() throws IOException{
-        return super.getInputStream();
-    }
-    
-    @Override
     public OutputStream getOutputStream() throws IOException{
         return super.getOutputStream();
+    }
+
+    @Override
+    public InputStream getInputStream() throws IOException{
+        return super.getInputStream();
     }
 
     public BufferedReader getBufferedReadr(){
