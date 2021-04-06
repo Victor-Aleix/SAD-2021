@@ -1,4 +1,4 @@
-import hashlib
+import hashlib,binascii
 import threading
 import timeit
 import time
@@ -26,7 +26,7 @@ def md5():
     print("Trying to crack the hash " + hash[0] + "...")
     for i in range(0, len(content)):
         result = hashlib.md5(content[i].encode())
-        if(result.hexdigest() == hash[0]):
+        if(result.hexdigest().lower() == hash[0].lower()):
             print("Hash cracked, the decoded string is : " + content[i])
 
 
@@ -34,7 +34,7 @@ def sha1():
     print("Trying to crack the hash " + hash[0] + "...")
     for i in range(0, len(content)):
         result = hashlib.sha1(content[i].encode())
-        if(result.hexdigest() == hash[0]):
+        if(result.hexdigest().lower() == hash[0].lower()):
             print("Hash cracked, the decoded string is : " + content[i])
 
 
@@ -42,23 +42,23 @@ def sha256():
     print("Trying to crack the hash " + hash[0] + "...")
     for i in range(0, len(content)):
         result = hashlib.sha256(content[i].encode())
-        if(result.hexdigest() == hash[0]):
+        if(result.hexdigest().lower() == hash[0].lower()):
+            print("Hash cracked, the decoded string is : " + content[i])
+
+
+def nltm():
+    print("Trying to crack the hash " + hash[0] + "...")
+    for i in range(0, len(content)):
+        result = hashlib.new('md4',content[i].encode('utf-16le'))
+        if(result.hexdigest().lower() == hash[0].lower()):
             print("Hash cracked, the decoded string is : " + content[i])
 
 
 # create and join threads
 """ def jointhreads():
-    for i in range(0, 30):
+    for i in range(0, numberofthreads):
         threads[i].join()
- """
-
-""" threads = []
-
-for i in range(0, 30):
-    threads.append('thread' + str(i))
-    threads[i] = threading.Thread(target=md5)
-    threads[i].start()
-
+        
 jointhreads() """
 
 # main thread
@@ -69,5 +69,7 @@ elif(args.mode == 'md5'):
     md5()
 elif(args.mode == 'sha256'):
     sha256()
+elif(args.mode == 'nltm'):
+    nltm()
 end = timeit.timeit()
 print("Time elapsed : " + str(end - start) + " seconds")
