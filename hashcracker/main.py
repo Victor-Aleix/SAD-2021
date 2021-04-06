@@ -21,6 +21,7 @@ with open(args.hashfile) as f:
 
 # defining functions for encoding strings
 
+
 def md5():
     print("Trying to crack the hash " + hash[0] + "...")
     for i in range(0, len(content)):
@@ -33,6 +34,14 @@ def sha1():
     print("Trying to crack the hash " + hash[0] + "...")
     for i in range(0, len(content)):
         result = hashlib.sha1(content[i].encode())
+        if(result.hexdigest() == hash[0]):
+            print("Hash cracked, the decoded string is : " + content[i])
+
+
+def sha256():
+    print("Trying to crack the hash " + hash[0] + "...")
+    for i in range(0, len(content)):
+        result = hashlib.sha256(content[i].encode())
         if(result.hexdigest() == hash[0]):
             print("Hash cracked, the decoded string is : " + content[i])
 
@@ -58,5 +67,7 @@ if(args.mode == 'sha1'):
     sha1()
 elif(args.mode == 'md5'):
     md5()
+elif(args.mode == 'sha256'):
+    sha256()
 end = timeit.timeit()
 print("Time elapsed : " + str(end - start) + " seconds")
