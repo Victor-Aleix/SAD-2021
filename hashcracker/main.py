@@ -1,7 +1,6 @@
-import hashlib,binascii
+import hashlib
 import threading
 import timeit
-import time
 import argparse
 
 
@@ -46,7 +45,7 @@ def sha256():
             print("Hash cracked, the decoded string is : " + content[i])
 
 
-def nt():
+def nltm():
     print("Trying to crack the hash " + hash[0] + "...")
     for i in range(0, len(content)):
         result = hashlib.new('md4',content[i].encode('utf-16le'))
@@ -58,7 +57,7 @@ def nt():
 """ def jointhreads():
     for i in range(0, numberofthreads):
         threads[i].join()
-
+        
 jointhreads() """
 
 # main thread
@@ -69,7 +68,7 @@ elif(args.mode == 'md5'):
     md5()
 elif(args.mode == 'sha256'):
     sha256()
-elif(args.mode == 'nt'):
-    nt()
+elif(args.mode == 'nltm'):
+    nltm()
 end = timeit.timeit()
 print("Time elapsed : " + str(end - start) + " seconds")
