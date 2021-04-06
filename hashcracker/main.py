@@ -23,7 +23,7 @@ with open(args.hashfile) as f:
 
 def md5():
     print("Trying to crack the hash " + hash[0] + "...")
-    for i in range(0, 30):
+    for i in range(0, len(content)):
         result = hashlib.md5(content[i].encode())
         if(result.hexdigest() == hash[0]):
             print("Hash cracked, the decoded string is : " + content[i])
@@ -31,7 +31,7 @@ def md5():
 
 def sha1():
     print("Trying to crack the hash " + hash[0] + "...")
-    for i in range(0, 30):
+    for i in range(0, len(content)):
         result = hashlib.sha1(content[i].encode())
         if(result.hexdigest() == hash[0]):
             print("Hash cracked, the decoded string is : " + content[i])
