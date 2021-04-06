@@ -10,5 +10,4 @@ python3 main.py -f <hashfile> -w <dictionary> -m <hashing algorithm>
 ## Future upgrades
 <ul>
   <li> Add more hashing algorithms</li>
-  <li> Multi-threading to increase speed</li>
 </ul>
