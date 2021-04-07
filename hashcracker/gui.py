@@ -55,11 +55,11 @@ for i in range(0, 15):
 
 # images
 decrypt_img=PhotoImage(
-    file="/home/ubuntu/SAD/HashCracker/decrypt-logo-small.png")
+    file="./images/decrypt-logo-small.png")
 select_wlist_img=PhotoImage(
-    file="/home/ubuntu/SAD/HashCracker/selectwlist-small.png")
+    file="./images/selectwlist-small.png")
 bg_img=PhotoImage(
-    file="/home/ubuntu/SAD/HashCracker/wallpaper-encr.png", master=window)
+    file="./images/wallpaper-encr.png", master=window)
 
 # labels
 img_label=tkinter.Label(window, image=bg_img)
