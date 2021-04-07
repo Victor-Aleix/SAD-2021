@@ -5,15 +5,21 @@ import hashing
 import time
 import guihashing
 
+# select wordlist from files
+
 
 def load_file():
-    filename = filedialog.askopenfilename(initialdir ="/home/ubuntu",title ="Select a file", filetypes =(("Text files", "*.txt*"),("all files","*.*")))
+    filename = filedialog.askopenfilename(
+        initialdir="/home/ubuntu", title="Select a file", filetypes=(("Text files", "*.txt*"), ("all files", "*.*")))
     wordlist[0] = filename
     content_label.configure(text=filename)
 
-def decrypt(is_open,hashstr):
-    hashstr=hash_textbox.get()
-    if(is_open == False):    
+# decrypt hash
+
+
+def decrypt(is_open, hashstr):
+    hashstr = hash_textbox.get()
+    if(is_open == False):
         with open(wordlist[0], errors='ignore') as f:
             content = f.read().splitlines()
             is_open = True
@@ -30,9 +36,8 @@ def decrypt(is_open,hashstr):
     output_label.configure(text="Hash cracked : " + str(result))
     end = time.time()
     time_label.configure(text="Time elapsed : " + str(end-start))
-    
 
-    
+
 is_open = False
 wordlist = [""]
 hashstr = ""
@@ -68,17 +73,19 @@ time_label = tkinter.Label(text="")
 time_label.grid(row=9, column=2)
 
 
-
 # buttons
-load_wordlist_button = tkinter.Button(window, text="Select wordlist", padx=5, pady=5, command=lambda: load_file())
+load_wordlist_button = tkinter.Button(
+    window, text="Select wordlist", padx=5, pady=5, command=lambda: load_file())
 load_wordlist_button.grid(row=4, column=2)
-decrypt_button = tkinter.Button(window, text="Decrypt", padx=5, pady=5, command=lambda: decrypt(is_open,hashstr))
+decrypt_button = tkinter.Button(
+    window, text="Decrypt", padx=5, pady=5, command=lambda: decrypt(is_open, hashstr))
 decrypt_button.grid(row=4, column=3)
+
 # textboxes
 hash_textbox = tkinter.Entry(window)
 hash_textbox.grid(row=3, column=2)
 algorithm_textbox = tkinter.Entry(window)
-algorithm_textbox.grid(row=2, column =2)
+algorithm_textbox.grid(row=2, column=2)
 
 
 window.mainloop()
