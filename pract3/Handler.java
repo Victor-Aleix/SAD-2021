@@ -5,9 +5,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
@@ -23,7 +20,6 @@ public class Handler implements Runnable {
 
     final SocketChannel socketChannel;
     final SelectionKey selectionKey;
-    final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     ByteBuffer input = ByteBuffer.allocate(1024);
     int state = READING;
@@ -96,7 +92,7 @@ public class Handler implements Runnable {
                 clientName = clientName+i;
             }
             clients.put(clientName, socketChannel);
-            System.out.println(dateFormat.format(new Date())+" [SERVER] " + clientName + " has just connected!");
+            System.out.println(" [SERVER] " + clientName + " has just connected!");
             try {
                 sendManager(CLIENT_CONNECTED);
 
@@ -109,7 +105,7 @@ public class Handler implements Runnable {
             if(clientMessage.equals("EXIT")){
                 try {
                     sendManager(CLIENT_DISCONNECTED);
-                    System.out.println(dateFormat.format(new Date())+" [SERVER] " + clientName + " has just left");
+                    System.out.println(" [SERVER] " + clientName + " has just left");
                     socketChannel.close();
                     clients.remove(clientName);
                 } catch (IOException e) {
@@ -117,7 +113,7 @@ public class Handler implements Runnable {
                 }
                 return;
             }else{
-                System.out.println(dateFormat.format(new Date())+" [SERVER] " + clientName + " says: \""+clientMessage+"\"");
+                System.out.println(" [SERVER] " + clientName + " says: \""+clientMessage+"\"");
             }
         }
     }
@@ -133,7 +129,7 @@ public class Handler implements Runnable {
             case CLIENT_CONNECTED:
                 toOtherClients = "[CLIENT CONNECTED] " + clientName + "\n";
 
-                String toMyClient = "[HELLO CLIENT] Connected at " + dateFormat.format(new Date()) +
+                String toMyClient = "[HELLO CLIENT] Connected " +
                         "\n[CLIENT LIST]";
                 for(Map.Entry<String,SocketChannel> entry : clients.entrySet()) {
                     toMyClient = toMyClient + ";" + entry.getKey();
@@ -157,8 +153,7 @@ public class Handler implements Runnable {
                 break;
 
             case CLIENT_MESSAGE:
-                DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-                toOtherClients = dateFormat.format(new Date()) +" >> ["+clientName+"]: " + clientMessage + "\n";
+                toOtherClients = " >> ["+clientName+"]: " + clientMessage + "\n";
                 for(Map.Entry<String,SocketChannel> entry : clients.entrySet()) {
                     if (entry.getKey() != clientName && clientMessage != null){
                         send(toOtherClients,entry.getValue());
