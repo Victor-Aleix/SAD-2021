@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.*;
-import java.util.Date;
 
 public class Client {
     private static final String HOST = "127.0.0.1";
@@ -122,8 +121,6 @@ public class Client {
 
     public static void sendMessage(String message){
         s.writeString(message);
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        writeInChat(dateFormat.format(new Date())+" << [ME]: "+message);
     }
 
     public static void writeInChat(String text){
