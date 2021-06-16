@@ -40,8 +40,7 @@ public class ChatFrame extends JFrame {
     }
 
     public void setupChatPanel(String nickname){
-        chatPanel = new ChatPanel("[CLIENT] Hello "+ nickname +"! Now you are talking with everyone :)\n" +
-                "↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓\n");
+        chatPanel = new ChatPanel("[CLIENT] Hello "+ nickname +"! Now you are talking with everyone :)\n");
         contentPanel.add(chatPanel, "2");
         contentCardLayout.show(contentPanel, "2");
 
